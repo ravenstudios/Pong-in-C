@@ -50,7 +50,7 @@ void sdl_update(){
 
 void sdl_draw(){
   sdl_update();
-  ball_draw(renderer, ball);
+  ball_draw(renderer, &ball);
 
   // SDL_RenderFillRect(renderer, &box);
 }

@@ -13,7 +13,7 @@ typedef struct{
 
 Ball ball_init();
 void ball_update(Ball *ball);
-void ball_draw(SDL_Renderer* renderer, Ball ball);
+void ball_draw(SDL_Renderer* renderer, Ball *ball);
 
 
 
