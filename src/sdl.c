@@ -4,17 +4,23 @@
 #include "sdl.h"
 #include "globals.h"
 #include "ball.h"
+#include "paddle.h"
 
 SDL_Window* window = NULL;
 SDL_Renderer* renderer = NULL;
 
 Ball ball;
+Paddle player1;
+Paddle player2;
 
 
 
 int sdl_init(){
   // Initialize SDL
   ball = ball_init();
+  player1 = paddle_init(0);
+  player2 = paddle_init(WINDOW_WIDTH - PADDLE_WIDTH);
+
   if (SDL_Init(SDL_INIT_VIDEO) < 0) {
       printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
       return 1;
@@ -45,12 +51,16 @@ int sdl_init(){
 
 void sdl_update(){
   ball_update(&ball);
+  paddle_update(&player1);
+  paddle_update(&player2);
 }
 
 
 void sdl_draw(){
   sdl_update();
   ball_draw(renderer, &ball);
+  paddle_draw(renderer, &player1);
+  paddle_draw(renderer, &player2);
 
   // SDL_RenderFillRect(renderer, &box);
 }

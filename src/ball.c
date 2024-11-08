@@ -14,14 +14,6 @@ Ball ball_init(){
   return ball;
 }
 
-// box.x = 0;   // X position
-// box.y = 0;   // Y position
-// box.w = 100;   // Width
-// box.h = 300;   // Height
-
-
-
-
 
 void ball_update(Ball *ball){
   ball->x += x_speed;
@@ -34,7 +26,6 @@ void ball_update(Ball *ball){
   if(ball->y +ball->rad > WINDOW_HEIGHT || ball->y < 0){
     y_speed = -y_speed;
   }
-
 }
 
 void ball_draw(SDL_Renderer* renderer, Ball *ball){

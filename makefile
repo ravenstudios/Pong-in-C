@@ -1,31 +1,37 @@
 # Compiler and flags
 CC = gcc
-CFLAGS = -Wall -I/usr/local/include
+CFLAGS = -Wall -Iinclude
 LDFLAGS = -L/usr/local/lib -lSDL2
 
+# Directories
+SRC_DIR = src
+BUILD_DIR = build
+INCLUDE_DIR = include
+
 # Target executable
-TARGET = pong
+TARGET = $(BUILD_DIR)/pong
 
-# Source files
-SRC = main.c sdl.c ball.c
-
-# Object files (each .c file gets compiled into a corresponding .o file)
-OBJ = $(SRC:.c=.o)
+# Source files and object files
+SRC = $(wildcard $(SRC_DIR)/*.c)
+OBJ = $(SRC:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
 
 # Default target
 all: $(TARGET)
 
 # Link object files to create the executable
-$(TARGET): $(OBJ)
+$(TARGET): $(OBJ) | $(BUILD_DIR)
 	$(CC) $(OBJ) -o $(TARGET) $(LDFLAGS)
 
-# Compile each .c file into a .o file
-%.o: %.c
+# Compile each .c file into a .o file in the build directory
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(BUILD_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
+
+# Create build directory if it doesn't exist
+$(BUILD_DIR):
+	mkdir -p $(BUILD_DIR)
 
 # Clean up object files and the executable
 clean:
-	rm -f $(OBJ) $(TARGET)
+	rm -rf $(BUILD_DIR)
 
-# Phony targets (so Makefile doesn't look for files with these names)
 .PHONY: all clean
